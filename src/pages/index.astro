@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import Products from '../components/Products.astro';
-import About from '../components/About.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import { getProducts } from '../lib/products';
@@ -15,7 +14,6 @@ const products = await getProducts();
   <Navbar />
   <Hero />
   <Products products={products} />
-  <About />
   <Contact />
   <Footer />
 </Layout>
