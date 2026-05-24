@@ -1,19 +1,12 @@
 ---
-const WA_NUMBER = '5491100000000'; // reemplazá con el número real
+const WA_NUMBER = import.meta.env.PUBLIC_WA_NUMBER;
 ---
 
 <section id="hero">
   <div class="hero-left">
     <p class="hero-badge">Taller de Indumentaria · Argentina</p>
 
-    <h1 class="hero-title">
-      SOS<span class="accent-red">-D</span><br />
-      INDUMENTARIA
-    </h1>
-
-    <p class="hero-sub">
-      [Tagline del taller — ej: "Diseñamos la identidad de tu equipo, desde el primer hilo hasta el último pespunte."]
-    </p>
+    <img class="hero-logo-img" src="/images/Logo_SOS-D.svg" alt="SOS-D Indumentaria" />
 
     <div class="hero-actions">
       <a class="btn-primary" href={`https://wa.me/${WA_NUMBER}`} target="_blank" rel="noopener">
@@ -27,16 +20,12 @@ const WA_NUMBER = '5491100000000'; // reemplazá con el número real
 
     <div class="hero-stats">
       <div class="stat-item">
-        <span class="stat-num">[XX]+</span>
-        <span class="stat-label">Años de experiencia</span>
+        <div class="stat-num">+500</div>
+        <div class="stat-label">Clientes felices</div>
       </div>
       <div class="stat-item">
-        <span class="stat-num">[XXX]+</span>
-        <span class="stat-label">Equipos vestidos</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">[XX]+</span>
-        <span class="stat-label">Promociones</span>
+        <div class="stat-num">+20</div>
+        <div class="stat-label">Años de experiencia</div>
       </div>
     </div>
   </div>
@@ -46,14 +35,6 @@ const WA_NUMBER = '5491100000000'; // reemplazá con el número real
       <div class="hero-strip hero-strip-1"></div>
       <div class="hero-strip hero-strip-2"></div>
       <div class="hero-strip hero-strip-3"></div>
-      <div class="placeholder-logo">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <circle cx="8.5" cy="8.5" r="1.5"/>
-          <path d="m21 15-5-5L5 21"/>
-        </svg>
-        [Logo del<br />taller aquí]
-      </div>
       <div class="placeholder-hero-img">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
           <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -101,19 +82,6 @@ const WA_NUMBER = '5491100000000'; // reemplazá con el número real
     height: 2px;
     background: var(--blue);
   }
-
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(4rem, 7vw, 7.5rem);
-    line-height: 0.92;
-    letter-spacing: 0.01em;
-    color: var(--ink);
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.7s 0.35s forwards;
-  }
-  .accent-red  { color: var(--red); }
-  .accent-blue { color: var(--blue); }
 
   .hero-sub {
     font-size: 1.05rem;
@@ -189,23 +157,15 @@ const WA_NUMBER = '5491100000000'; // reemplazá con el número real
   .hero-strip-2 { background: var(--blue); left: 6px; }
   .hero-strip-3 { background: var(--yellow); left: 12px; }
 
-  .placeholder-logo {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    background: var(--white);
-    border: 3px dashed var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.75rem;
-    text-align: center;
-    letter-spacing: 0.04em;
+  .hero-logo-img {
+    width: 100%;
+    max-width: 580px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
   }
-  .placeholder-logo svg { opacity: 0.4; }
 
   .placeholder-hero-img {
     width: calc(100% - 80px);
