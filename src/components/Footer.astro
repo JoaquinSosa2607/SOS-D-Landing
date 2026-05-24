@@ -1,0 +1,130 @@
+---
+const WA_NUMBER = '5491100000000'; // reemplazá con el número real
+---
+
+<div class="color-bar"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="footer-logo" href="#hero">SOS<span>-D</span></a>
+      <p>Taller de indumentaria deportiva y escolar.<br />[Ciudad, Provincia] — Argentina.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#products">Productos</a></li>
+        <li><a href="#about">Nosotros</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h4>Redes sociales</h4>
+      <div class="social-icons">
+        <a class="social-icon" href="#" title="Instagram [link placeholder]">IG</a>
+        <a class="social-icon" href="#" title="Facebook [link placeholder]">FB</a>
+        <a class="social-icon" href="#" title="TikTok [link placeholder]">TK</a>
+        <a class="social-icon" href={`https://wa.me/${WA_NUMBER}`} target="_blank" rel="noopener" title="WhatsApp">WA</a>
+      </div>
+      <p class="social-note">[Reemplazá los links con tus perfiles reales]</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© {new Date().getFullYear()} SOS-D Indumentaria. Todos los derechos reservados.</p>
+    <p>[Desarrollado por — tu nombre o agencia]</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--ink);
+    color: var(--white);
+    padding: 48px 24px;
+  }
+
+  .footer-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .footer-logo span { color: var(--red); }
+
+  .footer-brand p {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.6;
+  }
+
+  .footer-links h4,
+  .footer-social h4 {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 16px;
+  }
+
+  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links li a {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s;
+  }
+  .footer-links li a:hover { color: var(--white); }
+
+  .social-icons { display: flex; gap: 12px; }
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .social-icon:hover { border-color: var(--sky); color: var(--sky); }
+
+  .social-note {
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .footer-bottom {
+    max-width: var(--max-w);
+    margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(255, 255, 255, 0.35); }
+
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>

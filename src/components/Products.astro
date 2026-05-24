@@ -1,0 +1,194 @@
+---
+import type { Product } from '../lib/products';
+import ProductCard from './ProductCard.astro';
+
+interface Props { products: Product[] }
+const { products } = Astro.props;
+---
+
+<section id="products">
+  <div class="section-inner">
+    <div class="products-header">
+      <div>
+        <p class="section-label">Lo que hacemos</p>
+        <h2 class="section-title">NUESTROS<br />PRODUCTOS</h2>
+        <p class="section-desc">
+          [Breve descripción de la línea de productos — ej: "Fabricamos indumentaria deportiva y escolar a medida, con la calidad y el detalle que cada pedido merece."]
+        </p>
+      </div>
+
+      <div class="category-filters">
+        <button class="filter-btn active" data-cat="all">Todos</button>
+        <button class="filter-btn" data-cat="futbol">Fútbol</button>
+        <button class="filter-btn" data-cat="egresados">Egresados</button>
+        <button class="filter-btn" data-cat="escolar">Escolar</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      {products.map(p => <ProductCard product={p} />)}
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+</section>
+
+<!-- Client-side: filter + pagination on pre-rendered cards -->
+<script>
+  const PER_PAGE = 6;
+  let currentCat  = 'all';
+  let currentPage = 1;
+
+  const allCards     = Array.from(document.querySelectorAll<HTMLElement>('.product-card'));
+  const paginationEl = document.getElementById('pagination')!;
+
+  function getFiltered() {
+    return currentCat === 'all'
+      ? allCards
+      : allCards.filter(c => c.dataset.cat === currentCat);
+  }
+
+  function renderPage() {
+    const filtered   = getFiltered();
+    const totalPages = Math.ceil(filtered.length / PER_PAGE);
+    const start      = (currentPage - 1) * PER_PAGE;
+    const pageCards  = filtered.slice(start, start + PER_PAGE);
+
+    allCards.forEach(c => {
+      c.style.display = 'none';
+      c.classList.remove('visible');
+    });
+    pageCards.forEach((c, i) => {
+      c.style.display = '';
+      setTimeout(() => c.classList.add('visible'), i * 70);
+    });
+
+    // Pagination controls
+    if (totalPages <= 1) {
+      paginationEl.style.display = 'none';
+      return;
+    }
+    paginationEl.style.display = 'flex';
+    paginationEl.innerHTML = '';
+
+    const prev = document.createElement('button');
+    prev.className = 'page-btn page-arrow';
+    prev.textContent = '←';
+    prev.disabled = currentPage === 1;
+    prev.addEventListener('click', () => goToPage(currentPage - 1));
+    paginationEl.appendChild(prev);
+
+    for (let p = 1; p <= totalPages; p++) {
+      const btn = document.createElement('button');
+      btn.className = 'page-btn' + (p === currentPage ? ' active' : '');
+      btn.textContent = String(p);
+      btn.addEventListener('click', () => goToPage(p));
+      paginationEl.appendChild(btn);
+    }
+
+    const next = document.createElement('button');
+    next.className = 'page-btn page-arrow';
+    next.textContent = '→';
+    next.disabled = currentPage === totalPages;
+    next.addEventListener('click', () => goToPage(currentPage + 1));
+    paginationEl.appendChild(next);
+  }
+
+  function goToPage(page: number) {
+    currentPage = page;
+    renderPage();
+    document.getElementById('products')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat  = btn.dataset.cat ?? 'all';
+      currentPage = 1;
+      renderPage();
+    });
+  });
+
+  renderPage();
+</script>
+
+<style>
+  #products { background: var(--white); }
+
+  .products-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .category-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .filter-btn {
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover,
+  .filter-btn.active {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  /* Pagination */
+  .pagination {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 56px;
+  }
+
+  :global(.page-btn) {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  :global(.page-btn:hover:not(:disabled)) {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  :global(.page-btn.active) {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+  }
+  :global(.page-btn:disabled) { opacity: 0.3; cursor: default; }
+
+  @media (max-width: 1024px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px)  { .products-grid { grid-template-columns: 1fr 1fr; gap: 20px; } }
+  @media (max-width: 480px)  { .products-grid { grid-template-columns: 1fr; } }
+</style>

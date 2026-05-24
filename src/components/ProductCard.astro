@@ -1,0 +1,115 @@
+---
+import type { Product } from '../lib/products';
+
+interface Props { product: Product }
+const { product } = Astro.props;
+
+const tagClass = {
+  futbol:    'tag-futbol',
+  egresados: 'tag-egresados',
+  escolar:   'tag-escolar',
+}[product.category] ?? 'tag-futbol';
+
+const tagLabel = {
+  futbol:    'Fútbol',
+  egresados: 'Egresados',
+  escolar:   'Escolar',
+}[product.category] ?? product.category;
+---
+
+<div class="product-card" data-cat={product.category}>
+  <div class="product-img">
+    <span class={`product-tag ${tagClass}`}>{tagLabel}</span>
+
+    {product.image_url
+      ? <img class="product-image" src={product.image_url} alt={product.name} loading="lazy" />
+      : (
+        <>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="m21 15-5-5L5 21"/>
+          </svg>
+          <span>[Foto del producto]</span>
+        </>
+      )
+    }
+  </div>
+
+  <div class="product-info">
+    <p class="product-name">{product.name}</p>
+    <p class="product-desc">{product.description}</p>
+  </div>
+</div>
+
+<style>
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .product-card.visible { opacity: 1; transform: translateY(0); }
+
+  .product-img {
+    aspect-ratio: 1/1;
+    background: var(--off-white);
+    border: 2px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-align: center;
+    letter-spacing: 0.04em;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    border-radius: 2px;
+  }
+  .product-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: 8px;
+  }
+  .product-img svg { opacity: 0.3; transition: opacity 0.2s; }
+  .product-card:hover .product-img { border-color: var(--sky); }
+  .product-card:hover .product-img svg { opacity: 0.5; }
+
+  .product-tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 4px 12px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    z-index: 1;
+  }
+  .tag-futbol    { background: var(--red);  color: var(--white); }
+  .tag-egresados { background: var(--blue); color: var(--white); }
+  .tag-escolar   { background: var(--sky);  color: var(--white); }
+
+  .product-info { padding: 18px 0 0; }
+  .product-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .product-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+</style>

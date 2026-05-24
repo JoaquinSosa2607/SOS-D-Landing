@@ -1,0 +1,166 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'SOS-D Indumentaria',
+  description = '[Descripción del taller para SEO — ej: Fabricamos indumentaria deportiva y escolar a medida en Argentina.]',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* ── Reset & Base ─────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red:       #E53935;
+    --yellow:    #FDD835;
+    --blue:      #1565C0;
+    --sky:       #29B6F6;
+    --white:     #FFFFFF;
+    --off-white: #F7F6F3;
+    --ink:       #111111;
+    --muted:     #6B6B6B;
+    --border:    #E0E0E0;
+
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-serif:   'DM Serif Display', serif;
+    --font-body:    'DM Sans', sans-serif;
+
+    --max-w:      1200px;
+    --section-pad: 100px 24px;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+  /* ── Shared section utilities ─────────────────────────────────── */
+  section { padding: var(--section-pad); }
+
+  .section-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 520px;
+  }
+
+  /* ── Shared buttons ───────────────────────────────────────────── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #C62828; transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--white); transform: translateY(-1px); }
+
+  /* ── Animations ───────────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Color bar ────────────────────────────────────────────────── */
+  .color-bar {
+    height: 4px;
+    background: linear-gradient(to right,
+      var(--red)    0%  25%,
+      var(--yellow) 25% 50%,
+      var(--blue)   50% 75%,
+      var(--sky)    75% 100%
+    );
+  }
+
+  /* ── Responsive section padding ──────────────────────────────── */
+  @media (max-width: 768px) {
+    :root { --section-pad: 72px 20px; }
+  }
+</style>
